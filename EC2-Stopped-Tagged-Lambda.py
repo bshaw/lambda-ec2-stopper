@@ -11,26 +11,29 @@ ec2 = boto3.resource('ec2')
 def lambda_handler(event, context):
     # Use the filter() method of the instances collection to retrieve
     # all running EC2 instances.
-    filters1 = [{
-        'Name': 'instance-state-name', 
-        'Values': ['running']
-    }]
-    base = ec2.instances.filter(Filters=filters1)
+    filters = [{
+    		'Name': 'tag:AutoOff',
+            'Values': ['True']
+        },
+        {
+            'Name': 'instance-state-name', 
+            'Values': ['running']
+        }
+    ]
     
-    #filter again based on the AutoOff tag containing the value True
-    filters2 = [{
-        'Name': 'tag:AutoOff',
-        'Values': ['True']
-    }]
-    
-    instances = base.filter(Filters=filters2)
-    
-    #print the instances for logging purposes
-    for instance in instances:
-        print(instance.id)
-    
+    #filter the instances
+    instances = ec2.instances.filter(Filters=filters)
+
     #locate all running instances
     RunningInstances = [instance.id for instance in instances]
     
-    #perform the shutdown
-    ec2.instances.filter(InstanceIds=RunningInstances).stop()
+    #print the instances for logging purposes
+    #print RunningInstances 
+    
+    #make sure there are actually instances to shut down. 
+    if len(RunningInstances) > 0:
+        #perform the shutdown
+        shuttingDown = ec2.instances.filter(InstanceIds=RunningInstances).stop()
+        print shuttingDown
+    else:
+        print "Nothing to see here"
