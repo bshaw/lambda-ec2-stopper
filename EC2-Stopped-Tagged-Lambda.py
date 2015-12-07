@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     # Use the filter() method of the instances collection to retrieve
     # all running EC2 instances.
     filters = [{
-    		'Name': 'tag:AutoOff',
+            'Name': 'tag:AutoOff',
             'Values': ['True']
         },
         {
