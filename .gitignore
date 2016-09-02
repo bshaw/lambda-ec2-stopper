@@ -1,1 +1,12 @@
+**.pyc
+**__pycache__
+**.cache
+.coverage
+**terraform.tfvars
+terraform.tfstate
+terraform.tfstate.backup
+project.json
+**.crt
+**.DS_STORE
+venv/
 *.zip
