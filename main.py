@@ -27,7 +27,7 @@ def lambda_handler(event, context):
     # #filter the instances
     # instances = ec2.instances.filter(Filters=filters)
     # get instances with filter of running + with tag `Name`
-    instances = [i for i in ec2.instances.filter(Filters=[{'Name': 'instance-state-name', 'Values': ['running']}, {'Name':'tag:ineedtorun', 'Values':['False']}])]
+    instances = [i for i in ec2.instances.filter(Filters=[{'Name': 'instance-state-name', 'Values': ['running']}, {'Name':'tag:INeedToRun', 'Values':['True']}])]
 
     # #locate all running instances
     # RunningInstances = [instance.id for instance in instances]
